@@ -1,0 +1,8 @@
+.env
+.idea
+apps/*
+docker/ssh/config
+docker/ssh/id_rsa
+docker/ssh/known_hosts
+id_rsa
+!.gitignore

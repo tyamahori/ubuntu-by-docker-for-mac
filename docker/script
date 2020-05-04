@@ -1,0 +1,58 @@
+#!/bin/bash
+
+COMPOSE_PROJECT_NAME="tyamahori"
+
+# コンテナ名定義
+UBUNTU_NAME="${COMPOSE_PROJECT_NAME}-ubuntu"
+
+# 実行コマンド定義
+RUN_UBUNTU="docker exec -it ${UBUNTU_NAME}"
+
+
+case "$1" in
+
+"setup")
+  docker-compose down -v
+  docker-compose up -d --build
+  if [ ! -e './ssh/config' ]; then
+    cp ./ssh/config.example ./ssh/config
+  fi
+  if [ ! -e './ssh/id_rsa' ]; then
+    cp ./ssh/id_rsa.example ./ssh/id_rsa
+  fi
+  docker image prune -f
+  ;;
+
+"restart")
+  docker-compose down
+  docker-compose up -d
+  ;;
+
+"up")
+  docker-compose up -d
+  ;;
+
+"down")
+  docker-compose down
+  ;;
+
+"logs")
+  docker-compose logs -f
+  ;;
+
+"ubuntu")
+  docker exec -it $UBUNTU_NAME /bin/bash
+  ;;
+
+"aws")
+  $RUN_UBUNTU aws ${@:2}
+  ;;
+
+"tf")
+  $RUN_UBUNTU terraform ${@:2}
+  ;;
+
+*)
+  $RUN_UBUNTU ${@:1}
+  ;;
+esac

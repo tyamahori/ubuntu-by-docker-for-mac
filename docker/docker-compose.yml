@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  tyamahori-ubuntu:
+    build: .
+    container_name: tyamahori-ubuntu
+    tty: true
+    working_dir: ${WORKING_DIR}
+    volumes:
+      - ${LOCAL_DIR}:${WORKING_DIR}
+      - ./ssh:${HOME_DIR}/.ssh
+      - home:${HOME_DIR}
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_KEY}
+      AWS_DEFAULT_REGION: ${AWS_REGION}
+      AWS_DEFAULT_OUTPUT: ${AWS_OUTPUT}
+
+volumes:
+  home: {}
