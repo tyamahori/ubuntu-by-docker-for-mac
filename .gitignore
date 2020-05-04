@@ -6,3 +6,4 @@ docker/ssh/id_rsa
 docker/ssh/known_hosts
 id_rsa
 !.gitignore
+.DS_Store
